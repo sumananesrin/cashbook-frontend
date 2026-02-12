@@ -62,23 +62,9 @@ export default function DashboardPage() {
         setError(null)
 
         try {
-            // Need to get business ID first
-            const { businessApi } = await import('../api/client')
-            const businessRes = await businessApi.list()
-            const businesses = businessRes.data.results || businessRes.data || []
-
-            if (businesses.length === 0) {
-                setError('No business found. Please create a business first.')
-                setSaving(false)
-                return
-            }
-
-            const businessId = businesses[0].id
-
             await cashbookApi.create({
                 name: formData.name,
                 description: formData.description || '',
-                business: businessId,
                 is_default: cashbooks.length === 0 // First book is default
             })
 
